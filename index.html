@@ -10,7 +10,7 @@ body {
     margin: 0;
     padding: 0;
     background: #000;
-    color: white;
+    color: #fff;
     text-align: center;
     font-family: Georgia, serif;
     overflow: hidden;
@@ -31,7 +31,7 @@ body {
     font-style: italic;
     max-width: 700px;
     margin: 0 auto 30px auto;
-    color: #cccccc;
+    color: #f0f0f0;
     line-height: 1.6;
     padding: 0 20px;
 }
@@ -40,6 +40,7 @@ body {
 h1 {
     font-size: 32px;
     margin-bottom: 40px;
+    color: #fff;
 }
 
 /* Przyciski główne */
@@ -60,7 +61,7 @@ button {
 
 .yes {
     background-color: #ff2e63;
-    color: white;
+    color: #fff;
 }
 
 .yes:hover {
@@ -85,7 +86,7 @@ button {
 .heart {
     position: fixed;
     color: #ff2e63;
-    opacity: 0.4;
+    opacity: 0.7;
     animation: floatUp linear infinite;
     pointer-events: none;
 }
@@ -93,7 +94,7 @@ button {
 @keyframes floatUp {
     0% {
         transform: translateY(0) rotate(0deg);
-        opacity: 0.4;
+        opacity: 0.7;
     }
     100% {
         transform: translateY(-110vh) rotate(360deg);
@@ -106,4 +107,116 @@ button {
     position: fixed;
     color: #ff2e63;
     font-size: 80px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+    animation: popHeart 1s forwards;
+}
 
+@keyframes popHeart {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+/* Przyciski startowe */
+#startBtn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 8px 14px;
+    font-size: 14px;
+    background-color: #ff2e63;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    z-index: 5;
+    transition: 0.3s;
+}
+
+#startBtn:hover {
+    transform: scale(1.05);
+}
+</style>
+</head>
+
+<body>
+
+<!-- PRZYCISK STARTOWY -->
+<button id="startBtn">Kliknij tutaj zanim przeczytasz</button>
+
+<div class="container">
+
+<p class="top-text">
+Zuzia, wiem, że znamy się nie tak długo, ale naprawdę kocham z Tobą rozmawiać, pisać i widzieć Cię. 
+Marzę o tym, aby być z Tobą, a chociaż móc się spotkać i powiedzieć to w te śliczne niebieskie oczy. 
+Jesteś dziewczyną, która skradła moje serce. Odkąd pamiętam relacje jak nasza nie miały prawa bytu, 
+ale z Tobą czuję, że wszystko jest możliwe. Naprawdę powoli zakochuję się w Tobie, więc proszę — zgódź się.
+</p>
+
+<h1>Czy zostaniesz moją Walentynką?</h1>
+
+<div class="buttons">
+    <button class="yes" onclick="showMessage()">Tak ❤️</button>
+    <button class="no">Nie ❌</button>
+</div>
+
+<div class="message" id="loveMessage">
+    Wiedziałem, że powiesz TAK 💖
+</div>
+
+</div>
+
+<!-- MUZYKA -->
+<audio id="bg-music" loop>
+    <source src="i-wanna-be-yours.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Funkcja pokazująca wiadomość TAK
+function showMessage() {
+    document.getElementById("loveMessage").style.display = "block";
+}
+
+// Funkcja tworząca losowe serduszka
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = Math.random() * 100 + "vh";
+    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+    heart.style.animationDuration = (Math.random() * 4 + 4) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+}
+
+// Losowe serduszka co 400ms
+setInterval(createHeart, 400);
+
+// Funkcja animowanego serca po kliknięciu przycisku start
+function popHeartClick() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart-click");
+    heart.innerHTML = "❤";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1000);
+}
+
+// START MUZYKI PRZYCISK
+document.getElementById("startBtn").addEventListener("click", function() {
+    document.getElementById("bg-music").play();
+    popHeartClick();
+    this.style.display = "none"; // ukryj przycisk po kliknięciu
+});
+
+// Dodatkowo, muzyka startuje też po kliknięciu gdziekolwiek, jeśli ktoś nie kliknął przycisku
+document.addEventListener("click", function () {
+    document.getElementById("bg-music").play();
+}, { once: true });
+</script>
+
+</body>
+</html>
