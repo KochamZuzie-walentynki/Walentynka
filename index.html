@@ -3,105 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Will You Be My Valentine?</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+<title>Czy zostaniesz moją Walentynką?</title>
 
 <style>
-* {
+body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    height: 100vh;
-    background: #000;
-    overflow: hidden;
-    font-family: 'Montserrat', sans-serif;
+    background-color: #000;
+    color: white;
+    text-align: center;
+    font-family: Georgia, serif;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    color: white;
+    height: 100vh;
 }
 
-/* Delikatne serduszka w tle */
-.heart {
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background: rgba(255, 0, 60, 0.15);
-    transform: rotate(45deg);
-    animation: float 10s linear infinite;
+/* Górny romantyczny tekst */
+.top-text {
+    font-size: 15px;
+    font-style: italic;
+    max-width: 700px;
+    margin-bottom: 30px;
+    color: #cccccc;
+    line-height: 1.6;
+    padding: 0 20px;
 }
 
-.heart::before,
-.heart::after {
-    content: '';
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background: rgba(255, 0, 60, 0.15);
-    border-radius: 50%;
-}
-
-.heart::before {
-    top: -7px;
-    left: 0;
-}
-
-.heart::after {
-    left: -7px;
-    top: 0;
-}
-
-@keyframes float {
-    0% {
-        transform: translateY(100vh) rotate(45deg);
-        opacity: 0;
-    }
-    10% { opacity: 1; }
-    100% {
-        transform: translateY(-10vh) rotate(45deg);
-        opacity: 0;
-    }
-}
-
-.container {
-    text-align: center;
-    z-index: 10;
-}
-
+/* Pytanie główne */
 h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem;
-    letter-spacing: 2px;
-    margin-bottom: 20px;
-}
-
-p {
-    font-size: 1.2rem;
-    opacity: 0.8;
+    font-size: 32px;
     margin-bottom: 40px;
 }
 
+/* Przyciski */
+.buttons {
+    display: flex;
+    gap: 30px;
+}
+
 button {
-    padding: 15px 40px;
-    font-size: 1rem;
-    border: 1px solid white;
-    background: transparent;
-    color: white;
+    padding: 12px 30px;
+    font-size: 18px;
+    border-radius: 30px;
+    border: none;
     cursor: pointer;
     transition: 0.3s;
-    letter-spacing: 2px;
 }
 
-button:hover {
-    background: white;
-    color: black;
+/* TAK */
+.yes {
+    background-color: #ff2e63;
+    color: white;
 }
 
-.hidden {
+.yes:hover {
+    transform: scale(1.1);
+}
+
+/* NIE (przekreślone) */
+.no {
+    background-color: #333;
+    color: #888;
+    text-decoration: line-through;
+    cursor: not-allowed;
+}
+
+/* Wiadomość po kliknięciu */
+.message {
+    margin-top: 30px;
+    font-size: 22px;
+    color: #ff2e63;
     display: none;
 }
 </style>
@@ -109,33 +82,38 @@ button:hover {
 
 <body>
 
-<div class="container">
-    <h1>Czy zostaniesz moją Walentynką?</h1>
-    <p>Bo I wanna be yours...</p>
-    <button onclick="showLove()">TAK</button>
+<p class="top-text">
+Zuzia, wiem, że znamy się nie tak długo, ale naprawdę kocham z Tobą rozmawiać, pisać i widzieć Cię. 
+Marzę o tym, aby być z Tobą, a chociaż móc się spotkać i powiedzieć to w te śliczne niebieskie oczy. 
+Jesteś dziewczyną, która skradła moje serce. Odkąd pamiętam relacje jak nasza nie miały prawa bytu, 
+ale z Tobą czuję, że wszystko jest możliwe. Naprawdę powoli zakochuję się w Tobie, więc proszę — zgódź się.
+</p>
+
+<h1>Czy zostaniesz moją Walentynką?</h1>
+
+<div class="buttons">
+    <button class="yes" onclick="showMessage()">Tak ❤️</button>
+    <button class="no">Nie ❌</button>
 </div>
 
-<!-- Audio (dodaj swój plik mp3 do folderu) -->
-<audio id="song" loop>
-    <source src="iwannabeyours.mp3" type="audio/mpeg">
+<div class="message" id="loveMessage">
+    Wiedziałem, że powiesz TAK 💖
+</div>
+
+<!-- MUZYKA -->
+<audio id="bg-music" loop>
+    <source src="i-wanna-be-yours.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-function showLove() {
-    document.querySelector('.container').innerHTML = `
-        <h1>Wiedziałem ❤️</h1>
-        <p>I wanna be yours… always.</p>
-    `;
-    document.getElementById('song').play();
-}
+// Muzyka rusza po pierwszym kliknięciu (żeby przeglądarka nie blokowała)
+document.addEventListener("click", function () {
+    document.getElementById("bg-music").play();
+}, { once: true });
 
-/* Generowanie serduszek */
-for (let i = 0; i < 25; i++) {
-    let heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (5 + Math.random() * 5) + "s";
-    document.body.appendChild(heart);
+// Pokazanie wiadomości po kliknięciu TAK
+function showMessage() {
+    document.getElementById("loveMessage").style.display = "block";
 }
 </script>
 
