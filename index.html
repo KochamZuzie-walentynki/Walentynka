@@ -9,27 +9,41 @@
 body {
     margin: 0;
     padding: 0;
-    background: #000;
-    color: #fff;
     font-family: Georgia, serif;
     overflow-x: hidden;
     text-align: center;
+    color: white;
+    position: relative;
 }
 
-/* Kontener treści */
+/* TŁO ZE ZDJĘCIEM */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+        url("twoje-zdjecie.jpg") center/cover no-repeat;
+    filter: blur(8px);
+    z-index: -1;
+}
+
+/* Kontener */
 .container {
     position: relative;
     z-index: 2;
-    padding: 100px 20px 50px 20px; /* padding-top dla przycisku startowego */
+    padding: 120px 20px 50px 20px;
 }
 
-/* Górny romantyczny tekst */
+/* Górny tekst */
 .top-text {
     font-size: 15px;
     font-style: italic;
     max-width: 700px;
     margin: 0 auto 30px auto;
-    color: #f0f0f0;
     line-height: 1.6;
 }
 
@@ -37,10 +51,9 @@ body {
 h1 {
     font-size: 32px;
     margin-bottom: 40px;
-    color: #fff;
 }
 
-/* Przyciski główne */
+/* Przyciski */
 .buttons {
     display: flex;
     justify-content: center;
@@ -59,7 +72,7 @@ button {
 
 .yes {
     background-color: #ff2e63;
-    color: #fff;
+    color: white;
 }
 
 .yes:hover {
@@ -80,28 +93,38 @@ button {
     display: none;
 }
 
-/* Sekcja z tekstem piosenki - mniejsza, kursywa, w cudzysłowie */
+/* Tekst piosenki */
 .song-lyrics {
     font-size: 12px;
     font-style: italic;
-    color: #ccc;
+    color: #ddd;
     max-width: 800px;
-    margin: 50px auto 100px auto;
+    margin: 50px auto 80px auto;
     line-height: 1.6;
     display: none;
     text-align: left;
     padding: 0 20px;
 }
 
-.song-lyrics::before, .song-lyrics::after {
+.song-lyrics::before,
+.song-lyrics::after {
     content: '"';
 }
 
-/* Serduszka losowe */
+/* Dolny napis */
+.bottom-text {
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+/* Serduszka */
 .heart {
     position: fixed;
     color: #ff2e63;
-    opacity: 0.7;
+    opacity: 0.6;
     animation: floatUp linear infinite;
     pointer-events: none;
 }
@@ -109,7 +132,7 @@ button {
 @keyframes floatUp {
     0% {
         transform: translateY(0) rotate(0deg);
-        opacity: 0.7;
+        opacity: 0.6;
     }
     100% {
         transform: translateY(-110vh) rotate(360deg);
@@ -117,7 +140,7 @@ button {
     }
 }
 
-/* Serce po kliknięciu przycisku */
+/* Serce po kliknięciu */
 .heart-click {
     position: fixed;
     color: #ff2e63;
@@ -125,7 +148,6 @@ button {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%) scale(0);
-    opacity: 1;
     animation: popHeart 1s forwards;
 }
 
@@ -135,7 +157,7 @@ button {
     100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
 }
 
-/* Przyciski startowe */
+/* Przycisk start */
 #startBtn {
     position: fixed;
     top: 20px;
@@ -148,18 +170,12 @@ button {
     border-radius: 12px;
     cursor: pointer;
     z-index: 5;
-    transition: 0.3s;
-}
-
-#startBtn:hover {
-    transform: scale(1.05);
 }
 </style>
 </head>
 
 <body>
 
-<!-- PRZYCISK STARTOWY -->
 <button id="startBtn">Kliknij tutaj zanim przeczytasz</button>
 
 <div class="container">
@@ -182,69 +198,29 @@ ale z Tobą czuję, że wszystko jest możliwe. Naprawdę powoli zakochuję się
     Wiedziałem, że powiesz TAK 💖
 </div>
 
-<!-- Tekst piosenki, ukryty do czasu rozpoczęcia muzyki -->
 <div class="song-lyrics" id="lyrics">
-I wanna be your vacuum cleaner<br>
-Breathing in your dust<br>
-I wanna be your Ford Cortina<br>
-I will never rust<br>
-If you like your coffee hot<br>
-Let me be your coffee pot<br>
-You call the shots, babe<br>
-I just wanna be yours<br>
-Secrets I have held in my heart<br>
-Are harder to hide than I thought<br>
-Maybe I just wanna be yours<br>
-I wanna be yours, I wanna be yours<br>
-Wanna be yours<br>
-Wanna be yours<br>
-Wanna be yours<br>
-Let me be your leccy meter<br>
-And I'll never run out<br>
-Let me be the portable heater<br>
-That you'll get cold without<br>
-I wanna be your setting lotion (wanna be)<br>
-Hold your hair in deep devotion (How deep?)<br>
-At least as deep as the Pacific Ocean<br>
-Now I wanna be yours<br>
-Secrets I have held in my heart<br>
-Are harder to hide than I thought<br>
-Maybe I just wanna be yours<br>
-I wanna be yours, I wanna be yours<br>
-Wanna be yours<br>
-Wanna be yours<br>
-Wanna be yours<br>
-Wanna be yours<br>
-Wanna be yours<br>
-Wanna be yours<br>
-Wanna be yours<br>
-(Wanna be yours)<br>
-I wanna be your vacuum cleaner (wanna be yours)<br>
-Breathing in your dust (wanna be yours)<br>
-I wanna be your Ford Cortina (wanna be yours)<br>
-I will never rust (wanna be yours)<br>
-I just wanna be yours (wanna be yours)<br>
-I just wanna be yours (wanna be yours)<br>
-I just wanna be yours (wanna be yours)<br>
-                                                                                                                                                                          NAPRAWD MI NA TOBIE ZALEŻY KOCHANIE<br>
-                                                                                                                                                                                               CHCE BYC TWÓJ I TYLKO TWÓJ<br>
-<!-- Dodaj resztę linii piosenki w tym miejscu -->
+I wanna be yours<br>
+I wanna be yours<br>
+I wanna be yours<br>
+I wanna be yours<br>
+</div>
+
+<div class="bottom-text">
+NAPRAWDĘ MI NA TOBIE ZALEŻY KOCHANIE<br>
+CHCĘ BYĆ TWÓJ I TYLKO TWÓJ
 </div>
 
 </div>
 
-<!-- MUZYKA -->
 <audio id="bg-music" loop>
     <source src="i-wanna-be-yours.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// Funkcja pokazująca wiadomość TAK
 function showMessage() {
     document.getElementById("loveMessage").style.display = "block";
 }
 
-// Funkcja tworząca losowe serduszka
 function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
@@ -257,10 +233,8 @@ function createHeart() {
     setTimeout(() => heart.remove(), 8000);
 }
 
-// Losowe serduszka co 400ms
 setInterval(createHeart, 400);
 
-// Funkcja animowanego serca po kliknięciu przycisku start
 function popHeartClick() {
     const heart = document.createElement("div");
     heart.classList.add("heart-click");
@@ -269,21 +243,13 @@ function popHeartClick() {
     setTimeout(() => heart.remove(), 1000);
 }
 
-// START MUZYKI PRZYCISK
 document.getElementById("startBtn").addEventListener("click", function() {
     document.getElementById("bg-music").play();
+    document.getElementById("lyrics").style.display = "block";
     popHeartClick();
-    document.getElementById("lyrics").style.display = "block"; // pokaż tekst piosenki
-    this.style.display = "none"; // ukryj przycisk po kliknięciu
+    this.style.display = "none";
 });
-
-// Dodatkowo, muzyka startuje też po kliknięciu gdziekolwiek, jeśli ktoś nie kliknął przycisku
-document.addEventListener("click", function () {
-    document.getElementById("bg-music").play();
-    document.getElementById("lyrics").style.display = "block"; // pokaż tekst piosenki
-}, { once: true });
 </script>
 
 </body>
 </html>
-
