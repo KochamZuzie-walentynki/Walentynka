@@ -12,7 +12,7 @@ body {
     background: #000;
     color: #fff;
     font-family: Georgia, serif;
-    overflow: hidden;
+    overflow-x: hidden;
     text-align: center;
 }
 
@@ -78,6 +78,23 @@ button {
     font-size: 22px;
     color: #ff2e63;
     display: none;
+}
+
+/* Sekcja z tekstem piosenki - mniejsza, kursywa, w cudzysłowie */
+.song-lyrics {
+    font-size: 12px;
+    font-style: italic;
+    color: #ccc;
+    max-width: 800px;
+    margin: 50px auto 100px auto;
+    line-height: 1.6;
+    display: none;
+    text-align: left;
+    padding: 0 20px;
+}
+
+.song-lyrics::before, .song-lyrics::after {
+    content: '"';
 }
 
 /* Serduszka losowe */
@@ -150,12 +167,8 @@ button {
 <p class="top-text">
 Zuzia, wiem, że znamy się nie tak długo, ale naprawdę kocham z Tobą rozmawiać, pisać i widzieć Cię. 
 Marzę o tym, aby być z Tobą, a chociaż móc się spotkać i powiedzieć to w te śliczne niebieskie oczy. 
-    Przy Tobie czuję się sobą bo tak jak Zuzia z zapałkami jesteś moją Zuzią z ziemniakami !
 Jesteś dziewczyną, która skradła moje serce. Odkąd pamiętam relacje jak nasza nie miały prawa bytu, 
-ale z Tobą czuję, że wszystko jest możliwe. Naprawdę powoli ..
-                                                                       Zakochuję się w Tobie.
-    
-         więc proszę — zgódź się.
+ale z Tobą czuję, że wszystko jest możliwe. Naprawdę powoli zakochuję się w Tobie, więc proszę — zgódź się.
 </p>
 
 <h1>Czy zostaniesz moją Walentynką?</h1>
@@ -167,6 +180,15 @@ ale z Tobą czuję, że wszystko jest możliwe. Naprawdę powoli ..
 
 <div class="message" id="loveMessage">
     Wiedziałem, że powiesz TAK 💖
+</div>
+
+<!-- Tekst piosenki, ukryty do czasu rozpoczęcia muzyki -->
+<div class="song-lyrics" id="lyrics">
+I wanna be yours<br>
+I wanna be yours<br>
+I wanna be yours<br>
+I wanna be yours<br>
+<!-- Dodaj resztę linii piosenki w tym miejscu -->
 </div>
 
 </div>
@@ -211,14 +233,17 @@ function popHeartClick() {
 document.getElementById("startBtn").addEventListener("click", function() {
     document.getElementById("bg-music").play();
     popHeartClick();
+    document.getElementById("lyrics").style.display = "block"; // pokaż tekst piosenki
     this.style.display = "none"; // ukryj przycisk po kliknięciu
 });
 
 // Dodatkowo, muzyka startuje też po kliknięciu gdziekolwiek, jeśli ktoś nie kliknął przycisku
 document.addEventListener("click", function () {
     document.getElementById("bg-music").play();
+    document.getElementById("lyrics").style.display = "block"; // pokaż tekst piosenki
 }, { once: true });
 </script>
 
 </body>
 </html>
+
