@@ -9,15 +9,20 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #000;
+    background: #000;
     color: white;
     text-align: center;
     font-family: Georgia, serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    overflow: hidden;
+}
+
+/* Kontener treści */
+.container {
+    position: relative;
+    z-index: 2;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px;
 }
 
 /* Górny romantyczny tekst */
@@ -25,21 +30,22 @@ body {
     font-size: 15px;
     font-style: italic;
     max-width: 700px;
-    margin-bottom: 30px;
+    margin: 0 auto 30px auto;
     color: #cccccc;
     line-height: 1.6;
     padding: 0 20px;
 }
 
-/* Pytanie główne */
+/* Pytanie */
 h1 {
     font-size: 32px;
     margin-bottom: 40px;
 }
 
-/* Przyciski */
+/* Przyciski główne */
 .buttons {
     display: flex;
+    justify-content: center;
     gap: 30px;
 }
 
@@ -52,7 +58,6 @@ button {
     transition: 0.3s;
 }
 
-/* TAK */
 .yes {
     background-color: #ff2e63;
     color: white;
@@ -62,7 +67,6 @@ button {
     transform: scale(1.1);
 }
 
-/* NIE (przekreślone) */
 .no {
     background-color: #333;
     color: #888;
@@ -70,52 +74,36 @@ button {
     cursor: not-allowed;
 }
 
-/* Wiadomość po kliknięciu */
 .message {
     margin-top: 30px;
     font-size: 22px;
     color: #ff2e63;
     display: none;
 }
-</style>
-</head>
 
-<body>
-
-<p class="top-text">
-Zuzia, wiem, że znamy się nie tak długo, ale naprawdę kocham z Tobą rozmawiać, pisać i widzieć Cię. 
-Marzę o tym, aby być z Tobą, a chociaż móc się spotkać i powiedzieć to w te śliczne niebieskie oczy. 
-Jesteś dziewczyną, która skradła moje serce. Odkąd pamiętam relacje jak nasza nie miały prawa bytu, 
-ale z Tobą czuję, że wszystko jest możliwe. Naprawdę powoli zakochuję się w Tobie, więc proszę — zgódź się.
-</p>
-
-<h1>Czy zostaniesz moją Walentynką?</h1>
-
-<div class="buttons">
-    <button class="yes" onclick="showMessage()">Tak ❤️</button>
-    <button class="no">Nie ❌</button>
-</div>
-
-<div class="message" id="loveMessage">
-    Wiedziałem, że powiesz TAK 💖
-</div>
-
-<!-- MUZYKA -->
-<audio id="bg-music" loop>
-    <source src="i-wanna-be-yours.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-// Muzyka rusza po pierwszym kliknięciu (żeby przeglądarka nie blokowała)
-document.addEventListener("click", function () {
-    document.getElementById("bg-music").play();
-}, { once: true });
-
-// Pokazanie wiadomości po kliknięciu TAK
-function showMessage() {
-    document.getElementById("loveMessage").style.display = "block";
+/* Serduszka losowe */
+.heart {
+    position: fixed;
+    color: #ff2e63;
+    opacity: 0.4;
+    animation: floatUp linear infinite;
+    pointer-events: none;
 }
-</script>
 
-</body>
-</html>
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Serce po kliknięciu przycisku */
+.heart-click {
+    position: fixed;
+    color: #ff2e63;
+    font-size: 80px;
+
