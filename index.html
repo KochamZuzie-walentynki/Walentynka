@@ -9,42 +9,60 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Georgia', serif;
-    background: url("background.jpg") center/cover no-repeat fixed;
+    font-family: Georgia, serif;
     overflow-x: hidden;
     text-align: center;
     color: white;
+    position: relative;
+    transition: 1s ease;
 }
 
-/* BLUR OVERLAY */
+/* TŁO + SLOW ZOOM */
 body::before {
     content: "";
     position: fixed;
-    inset: 0;
-    backdrop-filter: blur(8px);
-    background: rgba(0,0,0,0.6);
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background:
+        linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+        url("twoje-zdjecie.jpg") center/cover no-repeat;
+    filter: blur(8px);
     z-index: -1;
+    animation: slowZoom 25s infinite alternate ease-in-out;
 }
 
-/* GÓRNY TEKST */
+@keyframes slowZoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    padding: 120px 20px 40px 20px;
+}
+
 .top-text {
-    font-size: 14px;
+    font-size: 15px;
     font-style: italic;
-    max-width: 800px;
-    margin: 60px auto 30px auto;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
     line-height: 1.6;
-    padding: 0 20px;
 }
 
-/* PYTANIE */
 h1 {
     font-size: 32px;
-    margin-top: 20px;
+    margin-bottom: 40px;
 }
 
-/* PRZYCISKI */
+/* Przyciski */
 .buttons {
-    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
 }
 
 button {
@@ -53,87 +71,128 @@ button {
     border-radius: 30px;
     border: none;
     cursor: pointer;
-    margin: 10px;
     transition: 0.3s;
 }
 
-.yes-btn {
-    background-color: #e63946;
+.yes {
+    background-color: #ff2e63;
     color: white;
 }
 
-.yes-btn:hover {
+.yes:hover {
     transform: scale(1.1);
 }
 
-.no-btn {
-    background-color: transparent;
-    color: gray;
+.no {
+    background-color: #333;
+    color: #888;
     text-decoration: line-through;
-    cursor: default;
+    cursor: not-allowed;
 }
 
-/* TEKST PIOSENKI */
-.song-text {
-    margin-top: 40px;
-    font-size: 13px;
+.message {
+    margin-top: 30px;
+    font-size: 22px;
+    color: #ff2e63;
+    display: none;
+}
+
+/* Tekst piosenki */
+.song-lyrics {
+    font-size: 12px;
     font-style: italic;
+    color: #ddd;
+    max-width: 800px;
+    margin: 50px auto 80px auto;
+    line-height: 1.6;
+    display: none;
     opacity: 0;
-    transition: opacity 2s ease;
+    transition: 2s ease;
+    text-align: left;
+    padding: 0 20px;
 }
 
-.song-text.show {
+.song-lyrics.show {
+    display: block;
     opacity: 1;
 }
 
-/* DOLNY NAPIS */
-.bottom-text {
-    margin-top: 60px;
-    font-size: 13px;
-    font-weight: bold;
+.song-lyrics::before,
+.song-lyrics::after {
+    content: '"';
 }
 
-/* SERDUSZKA */
+/* Dolny napis */
+.bottom-text {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+/* Serduszka */
 .heart {
     position: fixed;
-    bottom: -20px;
-    color: rgba(255, 0, 100, 0.5);
-    font-size: 20px;
+    color: #ff2e63;
+    opacity: 0.6;
     animation: floatUp linear infinite;
+    pointer-events: none;
 }
 
 @keyframes floatUp {
-    to {
-        transform: translateY(-110vh);
-        opacity: 0;
-    }
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
 }
 
-/* ANIMACJA SERCA PO KLIKNIĘCIU */
+/* DUŻE SERCE po TAK */
 .big-heart {
     position: fixed;
-    font-size: 100px;
-    color: #ff0033;
-    top: 50%;
+    font-size: 120px;
+    color: #ff2e63;
     left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%) scale(0);
-    animation: pop 1s ease forwards;
+    animation: bigHeart 1.2s forwards;
+    z-index: 10;
 }
 
-@keyframes pop {
-    to {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0;
-    }
+@keyframes bigHeart {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+/* Glow efekt */
+body.glow {
+    box-shadow: inset 0 0 200px rgba(255,46,99,0.4);
+}
+
+/* Przycisk start */
+#startBtn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 8px 14px;
+    font-size: 14px;
+    background-color: #ff2e63;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    z-index: 5;
 }
 </style>
 </head>
 
 <body>
 
+<button id="startBtn">Kliknij tutaj zanim przeczytasz</button>
+
+<div class="container">
+
 <p class="top-text">
 Zuzia, wiem, że znamy się nie tak długo, ale naprawdę kocham z Tobą rozmawiać, pisać i widzieć Cię. 
-Marzę o tym, aby być z Tobą, a chociaż móc się spotkać i powiedzieć to w te śliczne niebieskie niebieskie oczy. 
+Marzę o tym, aby być z Tobą, a chociaż móc się spotkać i powiedzieć to w te śliczne niebieskie oczy. 
 Jesteś dziewczyną, która skradła moje serce. Odkąd pamiętam relacje jak nasza nie miały prawa bytu, 
 ale z Tobą czuję, że wszystko jest możliwe. Naprawdę powoli zakochuję się w Tobie, więc proszę — zgódź się.
 </p>
@@ -141,13 +200,81 @@ ale z Tobą czuję, że wszystko jest możliwe. Naprawdę powoli zakochuję się
 <h1>Czy zostaniesz moją Walentynką?</h1>
 
 <div class="buttons">
-    <button class="yes-btn" onclick="acceptLove()">Tak ❤️</button>
-    <button class="no-btn">Nie</button>
+    <button class="yes" onclick="showMessage()">Tak ❤️</button>
+    <button class="no">Nie ❌</button>
 </div>
 
-<div id="song" class="song-text">
-"I wanna be your vacuum cleaner,<br>
-Breathing in your dust.<br>
-I wanna be your Ford Cortina,<br>
-I will never rust.<br><br>
-If you like your coffee
+<div class="message" id="loveMessage">
+    Wiedziałem, że powiesz TAK 💖
+</div>
+
+<div class="song-lyrics" id="lyrics">
+I wanna be yours<br>
+I wanna be yours<br>
+I wanna be yours<br>
+I wanna be yours<br>
+</div>
+
+<div class="bottom-text">
+NAPRAWDĘ MI NA TOBIE ZALEŻY KOCHANIE<br>
+CHCĘ BYĆ TWÓJ I TYLKO TWÓJ
+</div>
+
+</div>
+
+<audio id="bg-music" loop>
+<source src="i-wanna-be-yours.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music = document.getElementById("bg-music");
+const lyrics = document.getElementById("lyrics");
+const startBtn = document.getElementById("startBtn");
+const loveMessage = document.getElementById("loveMessage");
+
+/* Start muzyki */
+function startMusic() {
+    music.play();
+    lyrics.classList.add("show");
+    if (startBtn) startBtn.style.display = "none";
+}
+
+/* Kliknięcie START */
+startBtn.addEventListener("click", function() {
+    startMusic();
+});
+
+/* Kliknięcie TAK */
+function showMessage() {
+    loveMessage.style.display = "block";
+    startMusic();
+    document.body.classList.add("glow");
+    showBigHeart();
+}
+
+/* Duże serce */
+function showBigHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("big-heart");
+    heart.innerHTML = "❤";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 1200);
+}
+
+/* Małe serduszka */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.top = Math.random() * 100 + "vh";
+    heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+    heart.style.animationDuration = (Math.random() * 4 + 4) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+}
+setInterval(createHeart, 400);
+</script>
+
+</body>
+</html>
